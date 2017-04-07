@@ -1,5 +1,5 @@
 #!/bin/bash
-absDir=$(cd $(dirname $0);pwd)
+absDir="$(cd "$(dirname "$0")" && pwd)"
 function checkbin {
 	if [ -x "${absDir}/youtube-dl" ]; then
 		return 0
@@ -47,7 +47,7 @@ function checkdir {
 	else
 		indir=1
 		echo "Create youtube-dl-dir for downloaded video"
-		mkdir "${absDir}/youtube-dl-dir" 
+		mkdir "${absDir}/youtube-dl-dir"
 	fi
 }
 
