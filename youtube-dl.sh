@@ -1,7 +1,7 @@
 #!/bin/bash
-absDir="$(cd "$(dirname "$0")" && pwd)"
+cd "$(dirname "$0")"
 function checkbin {
-	if [ -x "${absDir}/youtube-dl" ]; then
+	if [ -x youtube-dl ]; then
 		return 0
 	else
 		echo "No youtube-dl exist"
@@ -37,17 +37,17 @@ function checkproxy {
 }
 
 function checkdir {
-	if [ -d "${absDir}/youtube-dl-dir" ]; then
+	if [ -d youtube-dl-dir ]; then
 		indir=1
 		echo "All video will be download in directory youtube-dl-dir"
-	elif [ -f "${absDir}/youtube-dl-dir" ]; then
+	elif [ -f youtube-dl-dir ]; then
 		indir=0
 		echo "youtube-dl-dir is not a directory"
 		echo "will download video file in same directory of this script"
 	else
 		indir=1
 		echo "Create youtube-dl-dir for downloaded video"
-		mkdir "${absDir}/youtube-dl-dir"
+		mkdir youtube-dl-dir
 	fi
 }
 
@@ -58,11 +58,11 @@ function download {
 		proxycmd=""
 	fi
 	if [ "${indir}" == 1 ]; then
-		desDir="-o ${absDir}/youtube-dl-dir/%(title)s-%(id)s.%(ext)s"
+		desDir="-o ./youtube-dl-dir/%(title)s-%(id)s.%(ext)s"
 	else
-		desDir="-o ${absDir}/%(title)s-%(id)s.%(ext)s"
+		desDir="-o ./%(title)s-%(id)s.%(ext)s"
 	fi
-	${absDir}/youtube-dl ${proxycmd} ${desDir} ${addr}
+	./youtube-dl ${proxycmd} ${desDir} ${addr}
 }
 
 checkbin && checkaddr && checkproxy && checkdir && download
